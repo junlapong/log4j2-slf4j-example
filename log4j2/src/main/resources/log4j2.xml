@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="warn">
+
+	<Properties>
+		<Property name="LOG_DIR">logs</Property>
+	</Properties>
+  
+	<Appenders>
+		<Console name="Console" target="SYSTEM_OUT">
+			<!--
+				%d{HH:mm:ss} %-5p [%t] %c.%M(%F:%L) - %m%n
+				%d{yyyy-MM-dd HH:mm:ss} %-5p [%t] %c.%M(%F:%L) - %m%n
+				%d{yyyy-MM-dd HH:mm:ss} %-5p [%t] %c{2}.%M() - %m%n
+				%d{yyyy-MM-dd HH:mm:ss} %-5p [%t] %c{1.} - %m%n
+			-->
+			<PatternLayout pattern="%d{HH:mm:ss} %-5p [%t] %C.%M(%F:%L) - %m%n" />
+		</Console>
+		
+		<!--
+		<File name="File" fileName="${LOG_DIR}/application.log">
+			<PatternLayout>
+				<Pattern>%d{yyyy-MM-dd HH:mm:ss} %-5p [%t] %c{1.} - %m%n</Pattern>
+			</PatternLayout>
+		</File>
+		-->
+		
+		<RollingFile name="RollingFile"
+				fileName="${LOG_DIR}/application.log"
+				filePattern="${LOG_DIR}/application.%d{yyyyMMdd}.log.gz"
+				ignoreExceptions="false">
+			<PatternLayout>
+				<Pattern>%d{yyyy-MM-dd HH:mm:ss} %-5p [%t] %c{2}.%M() - %m%n</Pattern>
+			</PatternLayout>
+			<Policies>
+				<TimeBasedTriggeringPolicy interval="1"/>
+			</Policies>
+			<DefaultRolloverStrategy max="7" />
+		</RollingFile>
+		
+	</Appenders>
+
+	<Loggers>
+		<Logger name="io.github.junlapong.ClassUseSlf4j" additivity="false" level="trace">
+			<AppenderRef ref="Console" />
+		</Logger>
+		
+		<Logger name="io.github.junlapong.TraceLog" additivity="false" level="trace">
+			<AppenderRef ref="RollingFile" />
+		</Logger>
+
+		<Root additivity="false" level="info">
+			<AppenderRef ref="Console" />
+			<AppenderRef ref="RollingFile" />
+		</Root>
+	</Loggers>
+</Configuration>

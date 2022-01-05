@@ -1,0 +1,17 @@
+### vscode ###
+.vscode
+
+### maven ###
+target/
+dependency-reduced-pom.xml
+
+### eclipse ###
+.metadata/
+.settings/
+.classpath
+.project
+.apt_generated
+.apt_generated_tests
+
+###
+logs/
